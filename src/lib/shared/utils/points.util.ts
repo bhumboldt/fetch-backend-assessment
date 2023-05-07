@@ -2,10 +2,11 @@ import {
   ALPHANUMERIC_REGEX,
   ITEM_PAIR_POINTS_MULTIPLE,
   MOMENT_HOURS_MINUTES_FORMAT,
+  ODD_DAY_POINTS,
   ROUND_TOTAL_PRICE_POINTS,
+  TIME_OF_DAY_POINTS,
   TOTAL_PRICE_MOD_25_POINTS,
 } from './constants.util';
-import * as moment from 'moment';
 import { getMoment } from './time.util';
 
 export const getRetailerNamePoints = (name: string) =>
@@ -35,19 +36,18 @@ export const getItemDescriptionPoints = <
     }))
     .reduce(
       (prev, { trimmedDescriptionLength, price }) =>
-        prev + (trimmedDescriptionLength % 3) === 0
-          ? Math.ceil(price * 0.2)
-          : 0,
+        prev +
+        (trimmedDescriptionLength % 3 === 0 ? Math.ceil(price * 0.2) : 0),
       0,
     );
 
-export const getOddDayPoints = (date: moment.Moment): number =>
-  date.date() % 2 === 1 ? 6 : 0;
+export const getOddDayPoints = (date: string): number =>
+  getMoment(date).date() % 2 === 1 ? ODD_DAY_POINTS : 0;
 
-export const getTimeBetween2And4PMPoints = (date: moment.Moment): number =>
-  date.isBetween(
+export const getTimeBetween2And4PMPoints = (date: string): number =>
+  getMoment(date, MOMENT_HOURS_MINUTES_FORMAT).isBetween(
     getMoment('14:00', MOMENT_HOURS_MINUTES_FORMAT),
     getMoment('16:00', MOMENT_HOURS_MINUTES_FORMAT),
   )
-    ? 10
+    ? TIME_OF_DAY_POINTS
     : 0;

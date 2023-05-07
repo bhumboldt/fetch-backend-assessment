@@ -3,3 +3,5 @@ export const ROUND_TOTAL_PRICE_POINTS = 50;
 export const TOTAL_PRICE_MOD_25_POINTS = 25;
 export const ITEM_PAIR_POINTS_MULTIPLE = 5;
 export const MOMENT_HOURS_MINUTES_FORMAT = 'HH:mm';
+export const ODD_DAY_POINTS = 6;
+export const TIME_OF_DAY_POINTS = 10;
